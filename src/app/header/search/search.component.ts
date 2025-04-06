@@ -10,19 +10,22 @@ export class SearchComponent {
   @Input() search = '';
   @Output() changeSearchEvent = new EventEmitter<string>();
 
-  private timeout: any;
-
   onSearchChange(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-
-    clearTimeout(this.timeout);
-
-    this.timeout = setTimeout(() => {
-      this.changeSearchEvent.emit(value);
-    }, 1000);
+    this.search = value;
   }
 
-  ngOnDestroy() {
-    clearTimeout(this.timeout);
+  changeSearchToRussia() {
+    this.changeSearchEvent.emit('Russia');
+  }
+
+  findButtonHandler() {
+    this.changeSearchEvent.emit(this.search);
+  }
+
+  onPressEnterHandler(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.changeSearchEvent.emit(this.search);
+    }
   }
 }

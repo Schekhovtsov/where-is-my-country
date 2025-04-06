@@ -9,8 +9,7 @@ import VectorSource from 'ol/source/Vector';
 import { fromLonLat } from 'ol/proj';
 import { Style, Stroke, Fill } from 'ol/style';
 import GeoJSON from 'ol/format/GeoJSON';
-import { defaults as defaultControls } from 'ol/control';
-import ScaleLine from 'ol/control/ScaleLine';
+import { Zoom } from 'ol/control';
 
 @Component({
   selector: 'app-map',
@@ -60,7 +59,7 @@ export class MapComponent implements OnInit {
           source: new OSM(),
         }),
       ],
-      controls: defaultControls().extend([new ScaleLine()]),
+      controls: [],
       view: new View({
         center: fromLonLat([94, 66]), // Центр России
         zoom: 3,

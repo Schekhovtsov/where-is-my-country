@@ -1,8 +1,15 @@
-<div class="container">
+<div class="search">
   <input
     class="input"
     type="text"
+    placeholder="Enter country name"
     (input)="onSearchChange($event)"
+    (keypress)="onPressEnterHandler($event)"
     [value]="search"
   />
+  <button (click)="findButtonHandler()">Find</button>
 </div>
+<span class="example"
+  >For example,
+  <span class="link" (click)="changeSearchToRussia()">Russia</span></span
+>

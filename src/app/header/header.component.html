@@ -1,11 +1,12 @@
 <div class="container">
-  <div class="contentWrapper">
-    <div class="content">
-      <h1>Where is my country?</h1>
-      <app-header-search
-        [search]="search"
-        (changeSearchEvent)="onSearchUpdated($event)"
-      ></app-header-search>
-    </div>
+  <div class="content">
+    <h1>Where is my country?</h1>
+    <span class="description">
+      A website that clearly shows where a particular country is located
+    </span>
+    <app-header-search
+      [search]="search"
+      (changeSearchEvent)="onSearchUpdated($event)"
+    ></app-header-search>
   </div>
 </div>

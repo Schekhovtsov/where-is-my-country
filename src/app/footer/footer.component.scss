@@ -1,0 +1,22 @@
+:host {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    gap: 10px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.501);
+    font-size: 13px;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.version {
+    padding-left: 10px;
+}
