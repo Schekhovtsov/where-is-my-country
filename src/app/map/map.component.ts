@@ -25,10 +25,10 @@ export class MapComponent implements OnInit {
   private highlightedCountryLayer!: VectorLayer<VectorSource>;
   private allCountriesSource!: VectorSource;
 
-  ngOnChanges({ search }: { search: SimpleChange}): void {
+  ngOnChanges({ search }: { search: SimpleChange }): void {
     const currentValue = search?.currentValue;
 
-    if (search.previousValue !== search.currentValue) {
+    if (!search.firstChange && search.previousValue !== search.currentValue) {
       this.search = currentValue;
       this.highlightCountry(currentValue);
     }
@@ -69,12 +69,14 @@ export class MapComponent implements OnInit {
   }
 
   private highlightCountry(countryName: string): void {
-    // Удаляем предыдущую подсветку
+    if (countryName === '') {
+      return;
+    }
+
     if (this.highlightedCountryLayer) {
       this.map.removeLayer(this.highlightedCountryLayer);
     }
 
-    // Находим нужную страну
     const countryFeature = this.allCountriesSource
       .getFeatures()
       .find(
@@ -89,7 +91,6 @@ export class MapComponent implements OnInit {
       return;
     }
 
-    // Создаем слой для подсветки
     const highlightSource = new VectorSource({
       features: [countryFeature],
     });
@@ -98,7 +99,7 @@ export class MapComponent implements OnInit {
       source: highlightSource,
       style: new Style({
         stroke: new Stroke({
-          color: 'rgba(255, 0, 0, 0.8)',
+          color: 'rgba(255, 0, 0, 0.25)',
           width: 1,
         }),
         fill: new Fill({
@@ -109,7 +110,7 @@ export class MapComponent implements OnInit {
 
     this.map.addLayer(this.highlightedCountryLayer);
     this.map.getView().fit(highlightSource.getExtent(), {
-      padding: [50, 50, 50, 50],
+      padding: [150, 50, 50, 50],
       duration: 1000,
     });
   }

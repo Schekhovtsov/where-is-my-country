@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-search',
+  selector: 'app-header-search',
   imports: [],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
