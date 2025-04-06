@@ -11,4 +11,9 @@ import { SearchComponent } from './search/search.component';
 })
 export class AppComponent {
   title = 'where-is-my-country';
+  search = 'Italy';
+
+  updateSearch(newSearchValue: any) {
+    this.search = newSearchValue;
+  }
 }

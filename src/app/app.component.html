@@ -1,6 +1,9 @@
-<main class="main">
-  <app-map></app-map>
-  <app-search></app-search>
+<main class="container">
+  <app-map [search]="search"></app-map>
+  <app-search
+    [search]="search"
+    (changeSearchEvent)="updateSearch($event)"
+  ></app-search>
 </main>
 
 <router-outlet />

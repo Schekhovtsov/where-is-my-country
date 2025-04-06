@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -19,14 +19,25 @@ import ScaleLine from 'ol/control/ScaleLine';
   styleUrl: './map.component.scss',
 })
 export class MapComponent implements OnInit {
+  @Input() search = '';
+
   private map!: Map;
   private highlightedCountryLayer!: VectorLayer<VectorSource>;
   private allCountriesSource!: VectorSource;
 
+  ngOnChanges({ search }: { search: SimpleChange}): void {
+    const currentValue = search?.currentValue;
+
+    if (search.previousValue !== search.currentValue) {
+      this.search = currentValue;
+      this.highlightCountry(currentValue);
+    }
+  }
+
   async ngOnInit() {
     this.initMap();
     await this.loadAllCountries();
-    this.highlightCountry('Italy');
+    this.highlightCountry(this.search);
   }
 
   private async loadAllCountries(): Promise<void> {
