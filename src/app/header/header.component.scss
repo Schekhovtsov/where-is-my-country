@@ -30,6 +30,12 @@
   z-index: 1000;
 }
 
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  .content {
+    width: 95%;
+  }
+}
+
 .description {
   color: #323232;
 }

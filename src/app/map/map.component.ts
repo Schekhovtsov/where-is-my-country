@@ -110,7 +110,7 @@ export class MapComponent implements OnInit {
     this.map.addLayer(this.highlightedCountryLayer);
     this.map.getView().fit(highlightSource.getExtent(), {
       padding: [150, 50, 50, 50],
-      duration: 1000,
+      duration: 500,
     });
   }
 }
