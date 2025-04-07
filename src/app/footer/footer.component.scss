@@ -7,20 +7,25 @@
     bottom: 0;
     left: 0;
     height: 30px;
-    background-color: rgba(255, 255, 255, 0.501);
     font-size: 13px;
 }
 
 footer {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
-    gap: 10px;
+    gap: 15px;
     padding: 0 10px;
+    color: #444444;
+    opacity: 0.2;
+
+    &:hover {
+        opacity: 1;
+    }
 
     a, a:visited {
-        color: #000000;
+        color: #444444;
         text-decoration: none;
     }
 

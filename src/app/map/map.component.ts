@@ -7,9 +7,8 @@ import VectorLayer from 'ol/layer/Vector';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import { fromLonLat } from 'ol/proj';
-import { Style, Stroke, Fill } from 'ol/style';
+import { Style, Text, Stroke, Fill } from 'ol/style';
 import GeoJSON from 'ol/format/GeoJSON';
-import { Zoom } from 'ol/control';
 
 @Component({
   selector: 'app-map',
@@ -61,7 +60,7 @@ export class MapComponent implements OnInit {
       ],
       controls: [],
       view: new View({
-        center: fromLonLat([94, 66]), // Центр России
+        center: fromLonLat([94, 66]),
         zoom: 3,
       }),
     });
@@ -72,6 +71,8 @@ export class MapComponent implements OnInit {
       return;
     }
 
+    countryName = countryName.toLowerCase();
+
     if (this.highlightedCountryLayer) {
       this.map.removeLayer(this.highlightedCountryLayer);
     }
@@ -80,9 +81,9 @@ export class MapComponent implements OnInit {
       .getFeatures()
       .find(
         (f) =>
-          f.get('NAME') === countryName ||
-          f.get('ISO_A2') === countryName ||
-          f.get('ISO_A3') === countryName
+          f.get('NAME').toLowerCase() === countryName ||
+          f.get('ISO_A2').toLowerCase() === countryName ||
+          f.get('ISO_A3').toLowerCase() === countryName
       );
 
     if (!countryFeature) {
