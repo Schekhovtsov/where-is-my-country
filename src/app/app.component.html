@@ -1,7 +1,7 @@
 <main class="container">
   <app-header
     [search]="search"
-    (searchUpdatedEvent)="updateSearch($event)"
+    (searchUpdateEvent)="updateSearch($event)"
   ></app-header>
   <app-map [search]="search"></app-map>
 </main>

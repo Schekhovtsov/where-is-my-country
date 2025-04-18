@@ -5,13 +5,13 @@ import { SearchComponent } from './search/search.component';
   selector: 'app-header',
   imports: [SearchComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   @Input() search = '';
-  @Output() searchUpdatedEvent = new EventEmitter<string>();
+  @Output() searchUpdateEvent = new EventEmitter<string>();
 
   onSearchUpdated(value: string) {
-    this.searchUpdatedEvent.emit(value); // Пробрасываем событие в App
+    this.searchUpdateEvent.emit(value);
   }
 }

@@ -7,8 +7,8 @@ import VectorLayer from 'ol/layer/Vector';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import { fromLonLat } from 'ol/proj';
-import { Style, Text, Stroke, Fill } from 'ol/style';
 import GeoJSON from 'ol/format/GeoJSON';
+import { getFocusStyles } from './map.config';
 
 @Component({
   selector: 'app-map',
@@ -24,11 +24,11 @@ export class MapComponent implements OnInit {
   private allCountriesSource!: VectorSource;
 
   ngOnChanges({ search }: { search: SimpleChange }): void {
-    const currentValue = search?.currentValue;
+    const searchCurrentValue = search?.currentValue;
 
     if (!search.firstChange && search.previousValue !== search.currentValue) {
-      this.search = currentValue;
-      this.highlightCountry(currentValue);
+      this.search = searchCurrentValue;
+      this.highlightCountry(searchCurrentValue);
     }
   }
 
@@ -51,13 +51,15 @@ export class MapComponent implements OnInit {
   }
 
   private initMap(): void {
+    const layers = [
+      new TileLayer({
+        source: new OSM(),
+      }),
+    ];
+
     this.map = new Map({
       target: 'map',
-      layers: [
-        new TileLayer({
-          source: new OSM(),
-        }),
-      ],
+      layers: layers,
       controls: [],
       view: new View({
         center: fromLonLat([94, 66]),
@@ -97,15 +99,7 @@ export class MapComponent implements OnInit {
 
     this.highlightedCountryLayer = new VectorLayer({
       source: highlightSource,
-      style: new Style({
-        stroke: new Stroke({
-          color: 'rgba(255, 0, 0, 0.25)',
-          width: 1,
-        }),
-        fill: new Fill({
-          color: 'rgba(255, 0, 0, 0.2)',
-        }),
-      }),
+      style: getFocusStyles(),
     });
 
     this.map.addLayer(this.highlightedCountryLayer);
