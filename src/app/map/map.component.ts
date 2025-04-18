@@ -18,6 +18,7 @@ import { getFocusStyles } from './map.config';
 })
 export class MapComponent implements OnInit {
   @Input() search = '';
+  @Input() zoomOnSearch = false;
 
   private map!: Map;
   private highlightedCountryLayer!: VectorLayer<VectorSource>;
@@ -103,9 +104,12 @@ export class MapComponent implements OnInit {
     });
 
     this.map.addLayer(this.highlightedCountryLayer);
-    this.map.getView().fit(highlightSource.getExtent(), {
-      padding: [150, 50, 50, 50],
-      duration: 500,
-    });
+
+    if (this.zoomOnSearch) {
+      this.map.getView().fit(highlightSource.getExtent(), {
+        padding: [150, 50, 50, 50],
+        duration: 500,
+      });
+    }
   }
 }

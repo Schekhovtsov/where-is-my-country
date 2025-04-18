@@ -8,5 +8,13 @@
       [search]="search"
       (changeSearchEvent)="onSearchUpdated($event)"
     ></app-header-search>
+    <label>
+      <input
+        type="checkbox"
+        [checked]="zoomOnSearch"
+        (change)="onZoomOnSearchUpdated()"
+      />
+      Zoom on search
+    </label>
   </div>
 </div>

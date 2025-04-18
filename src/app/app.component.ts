@@ -12,8 +12,13 @@ import { FooterComponent } from './footer/footer.component';
 })
 export class AppComponent {
   search = '';
+  zoomOnSearch = true;
 
   updateSearch(newSearchValue: any) {
     this.search = newSearchValue;
+  }
+
+  updateZoomOnSearch(newZoomOnSearchValue: boolean) {
+    this.zoomOnSearch = newZoomOnSearchValue;
   }
 }

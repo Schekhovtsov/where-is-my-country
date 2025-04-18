@@ -9,9 +9,16 @@ import { SearchComponent } from './search/search.component';
 })
 export class HeaderComponent {
   @Input() search = '';
+  @Input() zoomOnSearch = false;
   @Output() searchUpdateEvent = new EventEmitter<string>();
+  @Output() zoomOnSearchUpdateEvent = new EventEmitter<boolean>();
 
   onSearchUpdated(value: string) {
     this.searchUpdateEvent.emit(value);
+  }
+
+  onZoomOnSearchUpdated() {
+    this.zoomOnSearch = !this.zoomOnSearch;
+    this.zoomOnSearchUpdateEvent.emit(this.zoomOnSearch);
   }
 }
