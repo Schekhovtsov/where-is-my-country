@@ -39,3 +39,15 @@
 .description {
   color: #323232;
 }
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 13px;
+  color: #4a4a4a;
+
+  span {
+    margin-top: 1px;
+  }
+}

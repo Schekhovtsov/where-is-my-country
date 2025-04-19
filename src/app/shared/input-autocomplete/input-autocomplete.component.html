@@ -1,0 +1,15 @@
+<div class="input-container">
+  <input
+    [(ngModel)]="value"
+    (ngModelChange)="filterItems()"
+    (input)="filterItems()"
+    (focus)="showDropdown = true"
+    [placeholder]="placeholder"
+    class="input"
+  />
+  <ul *ngIf="showDropdown && filteredItems.length">
+    <li *ngFor="let item of filteredItems" (click)="selectItem(item)">
+      {{ item }}
+    </li>
+  </ul>
+</div>

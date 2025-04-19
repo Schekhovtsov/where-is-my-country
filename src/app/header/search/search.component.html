@@ -1,11 +1,9 @@
 <div class="search">
-  <input
-    class="input"
-    type="text"
+  <app-input-autocomplete
     placeholder="Enter country name"
-    (input)="onSearchChange($event)"
-    (keypress)="onPressEnterHandler($event)"
-    [value]="search"
+    [items]="countriesEn"
+    [(value)]="search"
+    (onItemClick)="findButtonHandler()"
   />
   <button (click)="findButtonHandler()">Find</button>
 </div>
