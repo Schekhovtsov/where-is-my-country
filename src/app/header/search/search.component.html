@@ -1,13 +1,15 @@
 <div class="search">
   <app-input-autocomplete
-    placeholder="Enter country name"
-    [items]="countriesEn"
+    placeholder="{{ 'searchPlaceholder' | translate }}"
+    [items]="countries"
     [(value)]="search"
-    (onItemClick)="findButtonHandler()"
+    (valueChange)="onSearchChange($event)"
+    (onItemClick)="onItemClickHandler($event)"
+    (keydown.enter)="onPressEnterHandler()"
   />
-  <button (click)="findButtonHandler()">Find</button>
+  <button (click)="findButtonHandler()">{{ "find" | translate }}</button>
 </div>
 <span class="example"
-  >For example,
-  <span class="link" (click)="changeSearchToRussia()">Russia</span></span
+  >{{ "forExample" | translate }},
+  <span class="link" (click)="changeSearchToRussia()">{{ "Russian Federation" | translate }}</span></span
 >

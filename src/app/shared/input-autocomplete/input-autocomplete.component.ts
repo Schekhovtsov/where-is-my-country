@@ -10,30 +10,34 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './input-autocomplete.component.scss',
 })
 export class InputAutocompleteComponent {
-  @Input() items: string[] = [];
+  @Input() items: Record<string, string> = {};
   @Input() placeholder: string = '';
   @Input() value: string = '';
   @Output() valueChange = new EventEmitter<string>();
+  @Output() searchUpdateEvent = new EventEmitter<string>();
   @Output() onItemClick = new EventEmitter<string>();
 
-  filteredItems: string[] = [];
+  filteredItems: Record<string, string> = {};
   showDropdown = false;
+  Object = Object;
 
-  filterItems() {
+  onInputChange() {
+    this.valueChange.emit(this.value);
     if (this.value.length) {
       this.showDropdown = true;
-      this.filteredItems = this.items.filter((item) =>
-        item.toLowerCase().includes(this.value.toLowerCase())
+      this.filteredItems = Object.fromEntries(
+        Object.entries(this.items).filter(([country]) =>
+          country.toLowerCase().includes(this.value.toLowerCase())
+        )
       );
     } else {
       this.showDropdown = false;
-      this.filteredItems = [];
+      this.filteredItems = {};
     }
   }
 
-  selectItem(item: string) {
+  onItemClickHandler(item: string) {
     this.value = item;
-    this.valueChange.emit(item);
     this.onItemClick.emit(item);
     this.showDropdown = false;
   }

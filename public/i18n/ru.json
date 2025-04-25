@@ -1,0 +1,8 @@
+{
+  "description": "Найдите любую страну на карте мира — мгновенно",
+  "find": "Найти",
+  "searchPlaceholder": "Введите название страны",
+  "forExample": "Например",
+  "zoomOnTheCountry": "Фокус на стране после поиска",
+  "Russian Federation": "Россия"
+}

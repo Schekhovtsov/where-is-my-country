@@ -2,11 +2,12 @@
   <div class="content">
     <h1>Where is my country?</h1>
     <span class="description">
-      Find any country on the map — instantly
+      {{ "description" | translate }}
     </span>
     <app-header-search
       [search]="search"
       (changeSearchEvent)="onSearchUpdated($event)"
+      (updateCountryEvent)="onUpdateCountry($event)"
     ></app-header-search>
     <label>
       <input
@@ -14,7 +15,7 @@
         [checked]="zoomOnSearch"
         (change)="onZoomOnSearchUpdated()"
       />
-      <span>Zoom on the country</span>
+      <span>{{ "zoomOnTheCountry" | translate }}</span>
     </label>
   </div>
 </div>

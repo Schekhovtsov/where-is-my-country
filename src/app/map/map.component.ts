@@ -9,6 +9,8 @@ import VectorSource from 'ol/source/Vector';
 import { fromLonLat } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
 import { getFocusStyles } from './map.config';
+import { COUNTRIES_EN, COUNTRIES_RU } from '../shared/lib/constants';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-map',
@@ -17,26 +19,35 @@ import { getFocusStyles } from './map.config';
   styleUrl: './map.component.scss',
 })
 export class MapComponent implements OnInit {
-  @Input() search = '';
+  @Input() country = '';
   @Input() zoomOnSearch = false;
+
+  private lang = 'en';
 
   private map!: Map;
   private highlightedCountryLayer!: VectorLayer<VectorSource>;
   private allCountriesSource!: VectorSource;
 
-  ngOnChanges({ search }: { search: SimpleChange }): void {
-    const searchCurrentValue = search?.currentValue;
+  constructor(private translate: TranslateService) {
+    this.lang = this.translate.getBrowserLang() || 'en';
+  }
 
-    if (!search.firstChange && search.previousValue !== search.currentValue) {
-      this.search = searchCurrentValue;
-      this.highlightCountry(searchCurrentValue);
+  ngOnChanges({ country }: { country: SimpleChange }): void {
+    const countryCurrentValue = country?.currentValue;
+
+    if (
+      !country.firstChange &&
+      country.previousValue !== country.currentValue
+    ) {
+      this.country = countryCurrentValue;
+      this.highlightCountry(countryCurrentValue);
     }
   }
 
   async ngOnInit() {
     this.initMap();
     await this.loadAllCountries();
-    this.highlightCountry(this.search);
+    this.highlightCountry(this.country);
   }
 
   private async loadAllCountries(): Promise<void> {
@@ -70,32 +81,26 @@ export class MapComponent implements OnInit {
   }
 
   private highlightCountry(countryName: string): void {
-    if (countryName === '') {
-      return;
-    }
-
-    countryName = countryName.toLowerCase();
+    const countryCode =
+      this.lang === 'ru'
+        ? COUNTRIES_RU[countryName]
+        : COUNTRIES_EN[countryName];
 
     if (this.highlightedCountryLayer) {
       this.map.removeLayer(this.highlightedCountryLayer);
     }
 
-    const countryFeature = this.allCountriesSource
+    const country = this.allCountriesSource
       .getFeatures()
-      .find(
-        (f) =>
-          f.get('NAME').toLowerCase() === countryName ||
-          f.get('ISO_A2').toLowerCase() === countryName ||
-          f.get('ISO_A3').toLowerCase() === countryName
-      );
+      .find((f) => f.get('ISO_A2') === countryCode);
 
-    if (!countryFeature) {
+    if (!country) {
       console.error(`Country ${countryName} not found`);
       return;
     }
 
     const highlightSource = new VectorSource({
-      features: [countryFeature],
+      features: [country],
     });
 
     this.highlightedCountryLayer = new VectorLayer({
