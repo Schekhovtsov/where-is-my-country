@@ -6,8 +6,8 @@
     </span>
     <app-header-search
       [search]="search"
-      (changeSearchEvent)="onSearchUpdated($event)"
-      (updateCountryEvent)="onUpdateCountry($event)"
+      (searchChangeEvent)="onChangeSearchHandler($event)"
+      (updateCountryEvent)="onUpdateCountryHandler($event)"
     ></app-header-search>
     <label>
       <input

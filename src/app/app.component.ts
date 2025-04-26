@@ -32,15 +32,15 @@ export class AppComponent {
   country = '';
   zoomOnSearch = true;
 
-  updateSearch(search: string) {
+  onChangeSearchHandler(search: string) {
     this.search = search;
   }
 
-  updateCountry(country: string) {
+  onUpdateCountryHandler(country: string) {
     this.country = country;
   }
 
-  updateZoomOnSearch(newZoomOnSearchValue: boolean) {
-    this.zoomOnSearch = newZoomOnSearchValue;
+  updateZoomOnSearch(value: boolean) {
+    this.zoomOnSearch = value;
   }
 }

@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,12 +16,12 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './input-autocomplete.component.html',
   styleUrl: './input-autocomplete.component.scss',
 })
-export class InputAutocompleteComponent {
+export class InputAutocompleteComponent implements OnChanges {
   @Input() items: Record<string, string> = {};
   @Input() placeholder: string = '';
   @Input() value: string = '';
+  @Input() forceClose: boolean = false;
   @Output() valueChange = new EventEmitter<string>();
-  @Output() searchUpdateEvent = new EventEmitter<string>();
   @Output() onItemClick = new EventEmitter<string>();
 
   filteredItems: Record<string, string> = {};
@@ -40,5 +47,11 @@ export class InputAutocompleteComponent {
     this.value = item;
     this.onItemClick.emit(item);
     this.showDropdown = false;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['forceClose'] && changes['forceClose'].currentValue === true) {
+      this.showDropdown = false;
+    }
   }
 }

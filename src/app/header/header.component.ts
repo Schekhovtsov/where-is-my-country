@@ -11,12 +11,12 @@ import { TranslateModule } from '@ngx-translate/core';
 export class HeaderComponent {
   @Input() search = '';
   @Input() zoomOnSearch = false;
-  @Output() searchUpdateEvent = new EventEmitter<string>();
+  @Output() searchChangeEvent = new EventEmitter<string>();
   @Output() updateCountryEvent = new EventEmitter<string>();
   @Output() zoomOnSearchUpdateEvent = new EventEmitter<boolean>();
 
-  onSearchUpdated(value: string) {
-    this.searchUpdateEvent.emit(value);
+  onChangeSearchHandler(value: string) {
+    this.searchChangeEvent.emit(value);
   }
 
   onZoomOnSearchUpdated() {
@@ -24,7 +24,7 @@ export class HeaderComponent {
     this.zoomOnSearchUpdateEvent.emit(this.zoomOnSearch);
   }
 
-  onUpdateCountry(country: string) {
+  onUpdateCountryHandler(country: string) {
     this.updateCountryEvent.emit(country);
   }
 }

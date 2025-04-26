@@ -3,6 +3,7 @@
     placeholder="{{ 'searchPlaceholder' | translate }}"
     [items]="countries"
     [(value)]="search"
+    [forceClose]="forceClose"
     (valueChange)="onSearchChange($event)"
     (onItemClick)="onItemClickHandler($event)"
     (keydown.enter)="onPressEnterHandler()"
@@ -11,5 +12,7 @@
 </div>
 <span class="example"
   >{{ "forExample" | translate }},
-  <span class="link" (click)="changeSearchToRussia()">{{ "Russian Federation" | translate }}</span></span
+  <span class="link" (click)="changeSearchToRussia()">{{
+    "Russian Federation" | translate
+  }}</span></span
 >

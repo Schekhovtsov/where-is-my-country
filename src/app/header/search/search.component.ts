@@ -12,9 +12,10 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class SearchComponent {
   @Input() search = '';
-  @Output() changeSearchEvent = new EventEmitter<string>();
+  @Output() searchChangeEvent = new EventEmitter<string>();
   @Output() updateCountryEvent = new EventEmitter<string>();
 
+  forceClose = false;
   lang: string = 'en';
 
   constructor(private translate: TranslateService) {
@@ -27,7 +28,7 @@ export class SearchComponent {
 
   onSearchChange(value: string) {
     this.search = value;
-    this.changeSearchEvent.emit(value);
+    this.searchChangeEvent.emit(value);
   }
 
   changeSearchToRussia() {
@@ -42,7 +43,11 @@ export class SearchComponent {
   }
 
   findButtonHandler() {
+    this.forceClose = true;
     this.updateCountryEvent.emit(this.search);
+    setTimeout(() => {
+      this.forceClose = false;
+    }, 0);
   }
 
   onPressEnterHandler() {

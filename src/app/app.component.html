@@ -3,8 +3,8 @@
     [lang]="lang"
     [search]="search"
     [zoomOnSearch]="zoomOnSearch"
-    (searchUpdateEvent)="updateSearch($event)"
-    (updateCountryEvent)="updateCountry($event)"
+    (searchChangeEvent)="onChangeSearchHandler($event)"
+    (updateCountryEvent)="onUpdateCountryHandler($event)"
     (zoomOnSearchUpdateEvent)="updateZoomOnSearch($event)"
   ></app-header>
   <app-map [country]="country" [zoomOnSearch]="zoomOnSearch"></app-map>
