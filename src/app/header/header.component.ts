@@ -9,22 +9,12 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  @Input() search = '';
   @Input() zoomOnSearch = false;
-  @Output() searchChangeEvent = new EventEmitter<string>();
-  @Output() updateCountryEvent = new EventEmitter<string>();
-  @Output() zoomOnSearchUpdateEvent = new EventEmitter<boolean>();
 
-  onChangeSearchHandler(value: string) {
-    this.searchChangeEvent.emit(value);
-  }
+  @Output() zoomOnSearchUpdateEvent = new EventEmitter<boolean>();
 
   onZoomOnSearchUpdated() {
     this.zoomOnSearch = !this.zoomOnSearch;
     this.zoomOnSearchUpdateEvent.emit(this.zoomOnSearch);
-  }
-
-  onUpdateCountryHandler(country: string) {
-    this.updateCountryEvent.emit(country);
   }
 }

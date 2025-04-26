@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { TranslateService } from '@ngx-translate/core';
 import { COUNTRIES_EN, COUNTRIES_RU } from './shared/lib/constants';
+import { SearchStateService } from './shared/services/search-state.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,10 @@ import { COUNTRIES_EN, COUNTRIES_RU } from './shared/lib/constants';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+    private searchState: SearchStateService
+  ) {
     this.translate.addLangs(['ru', 'en']);
     this.translate.setDefaultLang('ru');
 
@@ -22,23 +26,13 @@ export class AppComponent {
     this.lang = lang;
   }
 
-  lang = 'en';
-
   get countries() {
     return this.lang === 'ru' ? COUNTRIES_RU : COUNTRIES_EN;
   }
 
-  search = '';
-  country = '';
+  lang = 'en';
+
   zoomOnSearch = true;
-
-  onChangeSearchHandler(search: string) {
-    this.search = search;
-  }
-
-  onUpdateCountryHandler(country: string) {
-    this.country = country;
-  }
 
   updateZoomOnSearch(value: boolean) {
     this.zoomOnSearch = value;

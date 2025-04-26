@@ -2,7 +2,7 @@
   <app-input-autocomplete
     placeholder="{{ 'searchPlaceholder' | translate }}"
     [items]="countries"
-    [(value)]="search"
+    [value]="search"
     [forceClose]="forceClose"
     (valueChange)="onSearchChange($event)"
     (onItemClick)="onItemClickHandler($event)"

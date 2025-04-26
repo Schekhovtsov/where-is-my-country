@@ -1,8 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputAutocompleteComponent } from '../../shared/input-autocomplete/input-autocomplete.component';
 import { COUNTRIES_EN, COUNTRIES_RU } from '../../shared/lib/constants';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SearchStateService } from '../../shared/services/search-state.service';
+
 @Component({
   selector: 'app-header-search',
   standalone: true,
@@ -11,15 +13,23 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrl: './search.component.scss',
 })
 export class SearchComponent {
-  @Input() search = '';
-  @Output() searchChangeEvent = new EventEmitter<string>();
-  @Output() updateCountryEvent = new EventEmitter<string>();
-
+  search = '';
   forceClose = false;
   lang: string = 'en';
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+    private searchState: SearchStateService
+  ) {
     this.lang = this.translate.getBrowserLang() || 'en';
+
+    this.searchState.search$.subscribe((value) => {
+      this.search = value;
+    });
+
+    this.searchState.forceClose$.subscribe((value) => {
+      this.forceClose = value;
+    });
   }
 
   get countries() {
@@ -28,26 +38,26 @@ export class SearchComponent {
 
   onSearchChange(value: string) {
     this.search = value;
-    this.searchChangeEvent.emit(value);
+    this.searchState.updateSearch(value);
   }
 
   changeSearchToRussia() {
     const country = this.lang === 'ru' ? 'Россия' : 'Russian Federation';
     this.search = country;
-    this.updateCountryEvent.emit(country);
+    this.searchState.updateSearch(country);
+    this.searchState.selectCountry(country);
   }
 
-  onItemClickHandler(item: string) {
-    this.search = item;
-    this.updateCountryEvent.emit(item);
+  onItemClickHandler(country: string) {
+    this.search = country;
+    this.searchState.updateSearch(country);
+    this.searchState.selectCountry(country);
   }
 
   findButtonHandler() {
-    this.forceClose = true;
-    this.updateCountryEvent.emit(this.search);
-    setTimeout(() => {
-      this.forceClose = false;
-    }, 0);
+    if (this.search) {
+      this.searchState.selectCountry(this.search);
+    }
   }
 
   onPressEnterHandler() {

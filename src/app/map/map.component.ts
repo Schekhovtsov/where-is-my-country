@@ -11,6 +11,7 @@ import GeoJSON from 'ol/format/GeoJSON';
 import { getFocusStyles } from './map.config';
 import { COUNTRIES_EN, COUNTRIES_RU } from '../shared/lib/constants';
 import { TranslateService } from '@ngx-translate/core';
+import { SearchStateService } from '../shared/services/search-state.service';
 
 @Component({
   selector: 'app-map',
@@ -28,20 +29,13 @@ export class MapComponent implements OnInit {
   private highlightedCountryLayer!: VectorLayer<VectorSource>;
   private allCountriesSource!: VectorSource;
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, private searchState: SearchStateService) {
     this.lang = this.translate.getBrowserLang() || 'en';
-  }
 
-  ngOnChanges({ country }: { country: SimpleChange }): void {
-    const countryCurrentValue = country?.currentValue;
-
-    if (
-      !country.firstChange &&
-      country.previousValue !== country.currentValue
-    ) {
-      this.country = countryCurrentValue;
-      this.highlightCountry(countryCurrentValue);
-    }
+    this.searchState.selectedCountry$.subscribe((value) => {
+      this.country = value;
+      this.highlightCountry(value);
+    });
   }
 
   async ngOnInit() {

@@ -1,13 +1,10 @@
 <main class="container">
   <app-header
     [lang]="lang"
-    [search]="search"
     [zoomOnSearch]="zoomOnSearch"
-    (searchChangeEvent)="onChangeSearchHandler($event)"
-    (updateCountryEvent)="onUpdateCountryHandler($event)"
     (zoomOnSearchUpdateEvent)="updateZoomOnSearch($event)"
   ></app-header>
-  <app-map [country]="country" [zoomOnSearch]="zoomOnSearch"></app-map>
+  <app-map [zoomOnSearch]="zoomOnSearch"></app-map>
 </main>
 
 <router-outlet />

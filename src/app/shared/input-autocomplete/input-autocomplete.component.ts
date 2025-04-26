@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SearchStateService } from '../services/search-state.service';
 
 @Component({
   selector: 'app-input-autocomplete',
@@ -16,7 +17,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './input-autocomplete.component.html',
   styleUrl: './input-autocomplete.component.scss',
 })
-export class InputAutocompleteComponent implements OnChanges {
+export class InputAutocompleteComponent {
   @Input() items: Record<string, string> = {};
   @Input() placeholder: string = '';
   @Input() value: string = '';
