@@ -3,12 +3,10 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnChanges,
   SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SearchStateService } from '../services/search-state.service';
 
 @Component({
   selector: 'app-input-autocomplete',

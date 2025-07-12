@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InputAutocompleteComponent } from '../../shared/input-autocomplete/input-autocomplete.component';
 import { COUNTRIES_EN, COUNTRIES_RU } from '../../shared/lib/constants';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SearchStateService } from '../../shared/services/search-state.service';
+import { StateService } from '../../shared/services/state.service';
 
 @Component({
   selector: 'app-header-search',
@@ -19,15 +19,15 @@ export class SearchComponent {
 
   constructor(
     private translate: TranslateService,
-    private searchState: SearchStateService
+    private state: StateService
   ) {
     this.lang = this.translate.getBrowserLang() || 'en';
 
-    this.searchState.search$.subscribe((value) => {
+    this.state.search$.subscribe((value) => {
       this.search = value;
     });
 
-    this.searchState.forceClose$.subscribe((value) => {
+    this.state.forceClose$.subscribe((value) => {
       this.forceClose = value;
     });
   }
@@ -38,25 +38,25 @@ export class SearchComponent {
 
   onSearchChange(value: string) {
     this.search = value;
-    this.searchState.updateSearch(value);
+    this.state.onChangeSearch(value);
   }
 
   changeSearchToRussia() {
     const country = this.lang === 'ru' ? 'Россия' : 'Russian Federation';
     this.search = country;
-    this.searchState.updateSearch(country);
-    this.searchState.selectCountry(country);
+    this.state.onChangeSearch(country);
+    this.state.onSelectCountry(country);
   }
 
   onItemClickHandler(country: string) {
     this.search = country;
-    this.searchState.updateSearch(country);
-    this.searchState.selectCountry(country);
+    this.state.onChangeSearch(country);
+    this.state.onSelectCountry(country);
   }
 
   findButtonHandler() {
     if (this.search) {
-      this.searchState.selectCountry(this.search);
+      this.state.onSelectCountry(this.search);
     }
   }
 
